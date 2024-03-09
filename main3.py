@@ -1,24 +1,16 @@
 import pygame
-
-
-pygame.init()
 from pygame import mixer
+from musicll import treck1
+from musicll import treck2
+pygame.init()
+
 mixer.init()
-
-
-
-
-
-
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((900,600), pygame.RESIZABLE) #, flags=pygame.NOFRAME
 pygame.display.set_caption("КАЗИНО ОНЛАЙН")
 icon = pygame.image.load('images/icon.png').convert_alpha()
 pygame.display.set_icon(icon)
 label = pygame.font.Font('font/RubikGlitchPop-Regular.ttf', 50)
-
-
-
 
 restart_label = label.render('ИГРАТЬ', False, (14, 200, 255))
 restart_label_rect = restart_label.get_rect(topleft=(270, 300))
@@ -97,13 +89,13 @@ def restartik():
     global gameplay, player_x, bg_x2, bg_x
     if restart_label_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[0]:
         gameplay = True
-        bg_sound.play()
         player_x = 60
         ghost_in_game.clear()
         bg_x = 0
         bg_x2 = bg_x + 900
 def iventik():
-    global running
+    global running, mouse
+    mouse = pygame.mouse.get_pos()
     pygame.display.update()  # обновление экрана
     for event in pygame.event.get():  # завершение цикла и выход из приложения
         if event.type == pygame.QUIT:
@@ -111,19 +103,19 @@ def iventik():
             pygame.quit()
         if event.type == ghost_timer:
             ghost_in_game.append(ghost.get_rect(topleft=(900, 500)))
+
 def over():
     global bgO_x1, bgO_x2
     bgO_x1 = 0
     bgO_x2 = 900
     screen.blit(bgover, (bgO_x1, 0))
     screen.blit(bgover, (bgO_x2, -100))
+
+
 ghost = pygame.image.load('images/ukr.png').convert_alpha()
 ghost_in_game = []
 ghost_timer = pygame.USEREVENT + 2
 pygame.time.set_timer(ghost_timer, 1000)
-
-
-
 def walk():
     global walk_left, walk_right
     walk_left = [
@@ -150,16 +142,10 @@ jump_count = 7
 bg_x2 = 900
 gameplay = True
 running = True
-music_player = False
+
 while True: # цикл, чтобы экран был включен
     if gameplay:
-
-        if not music_player:
-            bg_sound = 'sound/gedagedago (128kbps).mp3'
-            pygame.mixer.music.load(bg_sound)
-            pygame.mixer.music.play()
-            music_player = True
-
+        treck1()
         walk()
         draw_background()
         update_background()
@@ -170,19 +156,8 @@ while True: # цикл, чтобы экран был включен
         animends()
     else:
         over()
-        if music_player:
-            pygame.mixer.music.stop()
-            bg_soundEND = 'sound/NVP.mp3'
-            pygame.mixer.music.load(bg_soundEND)
-            pygame.mixer.music.play()
-            music_player = False
-
-
-
+        treck2()
         screen.blit(restart_label, restart_label_rect)
-
-
-        mouse = pygame.mouse.get_pos()
         restartik()
     iventik()
 #скорость игры
