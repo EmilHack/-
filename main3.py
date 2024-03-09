@@ -1,19 +1,43 @@
 import pygame
+
+
 pygame.init()
+from pygame import mixer
+mixer.init()
+
+
+
+
+
+
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((900,600), pygame.RESIZABLE) #, flags=pygame.NOFRAME
 pygame.display.set_caption("КАЗИНО ОНЛАЙН")
 icon = pygame.image.load('images/icon.png').convert_alpha()
 pygame.display.set_icon(icon)
 label = pygame.font.Font('font/RubikGlitchPop-Regular.ttf', 50)
-lose_label = label.render('ОПУЩЕН', False, (255, 255, 255))
-restart_label = label.render('ИГРАТЬ СНОВА', False, (14, 200, 255))
+
+
+
+
+restart_label = label.render('ИГРАТЬ', False, (14, 200, 255))
 restart_label_rect = restart_label.get_rect(topleft=(270, 300))
+
+
+
 bg = pygame.image.load('images/bg.jpg').convert_alpha()
 bgover = pygame.image.load('images/image.psd(10).png').convert_alpha()
-bg_sound = pygame.mixer.Sound('sound/gedagedago (128kbps).mp3')
-bg_soundEND = pygame.mixer.Sound('sound/NVP.mp3')
+
+
+
+
+
+
+
+
+
 ''' функции '''
+
 def draw_background():
     screen.blit(bg, (bg_x, -100))
     screen.blit(bg, (bg_x2, -100))
@@ -97,7 +121,9 @@ ghost = pygame.image.load('images/ukr.png').convert_alpha()
 ghost_in_game = []
 ghost_timer = pygame.USEREVENT + 2
 pygame.time.set_timer(ghost_timer, 1000)
-bg_sound.play()
+
+
+
 def walk():
     global walk_left, walk_right
     walk_left = [
@@ -124,8 +150,16 @@ jump_count = 7
 bg_x2 = 900
 gameplay = True
 running = True
+music_player = False
 while True: # цикл, чтобы экран был включен
     if gameplay:
+
+        if not music_player:
+            bg_sound = 'sound/gedagedago (128kbps).mp3'
+            pygame.mixer.music.load(bg_sound)
+            pygame.mixer.music.play()
+            music_player = True
+
         walk()
         draw_background()
         update_background()
@@ -136,11 +170,18 @@ while True: # цикл, чтобы экран был включен
         animends()
     else:
         over()
+        if music_player:
+            pygame.mixer.music.stop()
+            bg_soundEND = 'sound/NVP.mp3'
+            pygame.mixer.music.load(bg_soundEND)
+            pygame.mixer.music.play()
+            music_player = False
 
-        screen.blit(lose_label,  (300, 200))
+
+
         screen.blit(restart_label, restart_label_rect)
-        bg_sound.stop()
-        bg_soundEND.play()
+
+
         mouse = pygame.mouse.get_pos()
         restartik()
     iventik()
