@@ -1,19 +1,18 @@
 import pygame
 from pygame import mixer
 from musicll import treck1, treck2
-from ekran import over, draw_background
+from ekran import over, draw_background, setdisplay
 from движение import kittyjimp, runkitty, animends
 pygame.init()
 mixer.init()
-clock = pygame.time.Clock()
 screen = pygame.display.set_mode((900, 600), pygame.RESIZABLE)
-pygame.display.set_caption("КАЗИНО ОНЛАЙН")
-icon = pygame.image.load('images/icon.png').convert_alpha()
-pygame.display.set_icon(icon)
+setdisplay()
 label = pygame.font.Font('font/RubikGlitchPop-Regular.ttf', 50)
 restart_label = label.render('ИГРАТЬ', False, (14, 200, 255))
 restart_label_rect = restart_label.get_rect(topleft=(270, 300))
 bg = pygame.image.load('images/bg.jpg').convert_alpha()
+
+
 def update_background():
     global bg_x, bg_x2
     if bg_x == -900:
@@ -37,6 +36,7 @@ def dead():
 
 def restartik():
     global gameplay, player_x, bg_x2, bg_x
+    mouse = pygame.mouse.get_pos()
     if restart_label_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[0]:
         gameplay = True
         player_x = 60
@@ -61,7 +61,6 @@ def walk():
         pygame.image.load('images/sprite_right/s6.png').convert_alpha()]
 def iventik():
     global running, mouse
-    mouse = pygame.mouse.get_pos()
     pygame.display.update()  # обновление экрана
     for event in pygame.event.get():  # завершение цикла и выход из приложения
         if event.type == pygame.QUIT:
@@ -69,6 +68,8 @@ def iventik():
             pygame.quit()
         if event.type == ghost_timer:
             ghost_in_game.append(ghost.get_rect(topleft=(900, 500)))
+    clock = pygame.time.Clock()
+    clock.tick(30)
 ghost = pygame.image.load('images/ukr.png').convert_alpha()
 ghost_in_game = []
 ghost_timer = pygame.USEREVENT + 2
@@ -79,7 +80,7 @@ player_y = 500
 player_speed = 5
 jump_count = 7
 bg_x2 = 900
-gameplay = True
+gameplay = False
 running = True
 while True:
     if gameplay:
@@ -97,4 +98,3 @@ while True:
         screen.blit(restart_label, restart_label_rect)
         restartik()
     iventik()
-    clock.tick(30)
