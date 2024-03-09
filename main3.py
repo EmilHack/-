@@ -2,11 +2,12 @@ import pygame
 from pygame import mixer
 from musicll import treck1
 from musicll import treck2
+from ekran import over
 pygame.init()
 
 mixer.init()
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((900,600), pygame.RESIZABLE) #, flags=pygame.NOFRAME
+screen = pygame.display.set_mode((900, 600), pygame.RESIZABLE)
 pygame.display.set_caption("КАЗИНО ОНЛАЙН")
 icon = pygame.image.load('images/icon.png').convert_alpha()
 pygame.display.set_icon(icon)
@@ -15,7 +16,6 @@ label = pygame.font.Font('font/RubikGlitchPop-Regular.ttf', 50)
 restart_label = label.render('ИГРАТЬ', False, (14, 200, 255))
 restart_label_rect = restart_label.get_rect(topleft=(270, 300))
 bg = pygame.image.load('images/bg.jpg').convert_alpha()
-bgover = pygame.image.load('images/image.psd(10).png').convert_alpha()
 
 
 def draw_background():
@@ -34,7 +34,7 @@ def update_background():
 
 
 def dead():
-    global gameplay #баг3
+    global gameplay
     player_rect = walk_left[0].get_rect(topleft=(player_x, player_y))
     if ghost_in_game:
         for (i, el) in enumerate(ghost_in_game):
@@ -107,14 +107,6 @@ def iventik():
             ghost_in_game.append(ghost.get_rect(topleft=(900, 500)))
 
 
-def over():
-    global bgO_x1, bgO_x2
-    bgO_x1 = 0
-    bgO_x2 = 900
-    screen.blit(bgover, (bgO_x1, 0))
-    screen.blit(bgover, (bgO_x2, -100))
-
-
 ghost = pygame.image.load('images/ukr.png').convert_alpha()
 ghost_in_game = []
 ghost_timer = pygame.USEREVENT + 2
@@ -124,19 +116,21 @@ pygame.time.set_timer(ghost_timer, 1000)
 def walk():
     global walk_left, walk_right
     walk_left = [
-    pygame.image.load('images/sprite_left/s1.png').convert_alpha(),
-    pygame.image.load('images/sprite_left/s2.png').convert_alpha(),
-    pygame.image.load('images/sprite_left/s3.png').convert_alpha(),
-    pygame.image.load('images/sprite_left/s4.png').convert_alpha(),
-    pygame.image.load('images/sprite_left/s5.png').convert_alpha(),
-    pygame.image.load('images/sprite_left/s6.png').convert_alpha()]
+        pygame.image.load('images/sprite_left/s1.png').convert_alpha(),
+        pygame.image.load('images/sprite_left/s2.png').convert_alpha(),
+        pygame.image.load('images/sprite_left/s3.png').convert_alpha(),
+        pygame.image.load('images/sprite_left/s4.png').convert_alpha(),
+        pygame.image.load('images/sprite_left/s5.png').convert_alpha(),
+        pygame.image.load('images/sprite_left/s6.png').convert_alpha()]
     walk_right = [
-    pygame.image.load('images/sprite_right/s1.png').convert_alpha(),
-    pygame.image.load('images/sprite_right/s2.png').convert_alpha(),
-    pygame.image.load('images/sprite_right/s3.png').convert_alpha(),
-    pygame.image.load('images/sprite_right/s4.png').convert_alpha(),
-    pygame.image.load('images/sprite_right/s5.png').convert_alpha(),
-    pygame.image.load('images/sprite_right/s6.png').convert_alpha()]
+        pygame.image.load('images/sprite_right/s1.png').convert_alpha(),
+        pygame.image.load('images/sprite_right/s2.png').convert_alpha(),
+        pygame.image.load('images/sprite_right/s3.png').convert_alpha(),
+        pygame.image.load('images/sprite_right/s4.png').convert_alpha(),
+        pygame.image.load('images/sprite_right/s5.png').convert_alpha(),
+        pygame.image.load('images/sprite_right/s6.png').convert_alpha()]
+
+
 player_anim_count = 0
 bg_x = 0
 player_speed = 5
@@ -148,7 +142,9 @@ bg_x2 = 900
 gameplay = True
 running = True
 
-while True: # цикл, чтобы экран был включен
+
+while True:
+
     if gameplay:
         treck1()
         walk()
@@ -165,7 +161,7 @@ while True: # цикл, чтобы экран был включен
         screen.blit(restart_label, restart_label_rect)
         restartik()
     iventik()
-#скорость игры
+
     clock.tick(30)
 
 
