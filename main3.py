@@ -14,8 +14,6 @@ label = pygame.font.Font('font/RubikGlitchPop-Regular.ttf', 50)
 restart_label = label.render('ИГРАТЬ', False, (14, 200, 255))
 restart_label_rect = restart_label.get_rect(topleft=(270, 300))
 bg = pygame.image.load('images/bg.jpg').convert_alpha()
-
-
 def update_background():
     global bg_x, bg_x2
     if bg_x == -900:
@@ -24,11 +22,9 @@ def update_background():
         bg_x2 = 900
     bg_x -= 2
     bg_x2 -= 2
-
-
 def dead():
     global gameplay
-    player_rect = walk_left[0].get_rect(topleft=(player_x, player_y))
+    player_rect = walk_right[0].get_rect(topleft=(player_x, player_y))
     if ghost_in_game:
         for (i, el) in enumerate(ghost_in_game):
             screen.blit(ghost, el)
@@ -47,7 +43,6 @@ def restartik():
         ghost_in_game.clear()
         bg_x = 0
         bg_x2 = bg_x + 900
-
 def walk():
     global walk_left, walk_right
     walk_left = [
@@ -74,16 +69,14 @@ def iventik():
             pygame.quit()
         if event.type == ghost_timer:
             ghost_in_game.append(ghost.get_rect(topleft=(900, 500)))
-
-
 ghost = pygame.image.load('images/ukr.png').convert_alpha()
 ghost_in_game = []
 ghost_timer = pygame.USEREVENT + 2
 pygame.time.set_timer(ghost_timer, 1000)
 bg_x = 0
-player_speed = 5
 player_x = 60
 player_y = 500
+player_speed = 5
 jump_count = 7
 bg_x2 = 900
 gameplay = True
@@ -95,9 +88,9 @@ while True:
         draw_background(bg, bg_x, bg_x2)
         update_background()
         dead()
-        runkitty(player_speed, player_x)
-        kittyjimp(player_y)
-        animends(screen, walk_right, walk_left, player_x, player_y, bg_x, bg_x2)
+        player_x, player_speed = runkitty(player_speed, player_x)
+        player_y, jump_count = kittyjimp(player_y, jump_count)
+        animends(screen, walk_left, walk_right, player_x, player_y, bg_x, bg_x2)
     else:
         over()
         treck2()
@@ -105,5 +98,3 @@ while True:
         restartik()
     iventik()
     clock.tick(30)
-
-

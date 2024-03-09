@@ -1,11 +1,11 @@
 import pygame
 
-keys = pygame.key.get_pressed()
-
 is_jump = False
 player_anim_count = 0
-def kittyjimp(player_y):
-    global is_jump, jump_count
+
+def kittyjimp(player_y, jump_count):
+    keys = pygame.key.get_pressed()
+    global is_jump
     if not is_jump:
         if keys[pygame.K_SPACE]:
             is_jump = True
@@ -20,15 +20,20 @@ def kittyjimp(player_y):
             is_jump = False
             jump_count = 7
 
+    return player_y, jump_count
+
 
 def runkitty(player_speed, player_x):
+    keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and player_x > 50:  # передвижение персонажа
         player_x -= player_speed
     elif keys[pygame.K_RIGHT] and player_x < 850:
         player_x += player_speed
 
+    return player_x, player_speed
 
 def animends(screen, walk_left, walk_right, player_x, player_y, bg_x, bg_x2):
+    keys = pygame.key.get_pressed()
     global player_anim_count
     if keys[pygame.K_LEFT]:  # смена анимации
         screen.blit(walk_left[player_anim_count], (player_x, player_y))
