@@ -14,25 +14,15 @@ label = pygame.font.Font('font/RubikGlitchPop-Regular.ttf', 50)
 
 restart_label = label.render('ИГРАТЬ', False, (14, 200, 255))
 restart_label_rect = restart_label.get_rect(topleft=(270, 300))
-
-
-
 bg = pygame.image.load('images/bg.jpg').convert_alpha()
 bgover = pygame.image.load('images/image.psd(10).png').convert_alpha()
 
 
-
-
-
-
-
-
-
-''' функции '''
-
 def draw_background():
     screen.blit(bg, (bg_x, -100))
     screen.blit(bg, (bg_x2, -100))
+
+
 def update_background():
     global bg_x, bg_x2
     if bg_x == -900:
@@ -41,6 +31,8 @@ def update_background():
         bg_x2 = 900
     bg_x -= 2
     bg_x2 -= 2
+
+
 def dead():
     global gameplay #баг3
     player_rect = walk_left[0].get_rect(topleft=(player_x, player_y))
@@ -52,12 +44,16 @@ def dead():
                 ghost_in_game.pop(i)
             if player_rect.colliderect(el):
                 gameplay = False
+
+
 def runkitty():
     global player_x
     if keys[pygame.K_LEFT] and player_x > 50:  # передвижение персонажа
         player_x -= player_speed
     elif keys[pygame.K_RIGHT] and player_x < 850:
         player_x += player_speed
+
+
 def kittyjimp():
     global is_jump, jump_count, player_y
     if not is_jump:
@@ -73,6 +69,8 @@ def kittyjimp():
         else:
             is_jump = False
             jump_count = 7
+
+
 def animends():
     global player_anim_count, bg_x, bg_x2
     if keys[pygame.K_LEFT]:  # смена анимации
@@ -85,6 +83,8 @@ def animends():
         player_anim_count += 1
     bg_x -= 2
     bg_x2 -= 2
+
+
 def restartik():
     global gameplay, player_x, bg_x2, bg_x
     if restart_label_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[0]:
@@ -93,6 +93,8 @@ def restartik():
         ghost_in_game.clear()
         bg_x = 0
         bg_x2 = bg_x + 900
+
+
 def iventik():
     global running, mouse
     mouse = pygame.mouse.get_pos()
@@ -103,6 +105,7 @@ def iventik():
             pygame.quit()
         if event.type == ghost_timer:
             ghost_in_game.append(ghost.get_rect(topleft=(900, 500)))
+
 
 def over():
     global bgO_x1, bgO_x2
@@ -116,6 +119,8 @@ ghost = pygame.image.load('images/ukr.png').convert_alpha()
 ghost_in_game = []
 ghost_timer = pygame.USEREVENT + 2
 pygame.time.set_timer(ghost_timer, 1000)
+
+
 def walk():
     global walk_left, walk_right
     walk_left = [
