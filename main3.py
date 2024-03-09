@@ -1,10 +1,9 @@
 import pygame
 from pygame import mixer
-from musicll import treck1
-from musicll import treck2
-from ekran import over
+from musicll import treck1, treck2
+from ekran import over, draw_background
+from движение import kittyjimp, runkitty, animends
 pygame.init()
-
 mixer.init()
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((900, 600), pygame.RESIZABLE)
@@ -12,15 +11,9 @@ pygame.display.set_caption("КАЗИНО ОНЛАЙН")
 icon = pygame.image.load('images/icon.png').convert_alpha()
 pygame.display.set_icon(icon)
 label = pygame.font.Font('font/RubikGlitchPop-Regular.ttf', 50)
-
 restart_label = label.render('ИГРАТЬ', False, (14, 200, 255))
 restart_label_rect = restart_label.get_rect(topleft=(270, 300))
 bg = pygame.image.load('images/bg.jpg').convert_alpha()
-
-
-def draw_background():
-    screen.blit(bg, (bg_x, -100))
-    screen.blit(bg, (bg_x2, -100))
 
 
 def update_background():
@@ -46,45 +39,6 @@ def dead():
                 gameplay = False
 
 
-def runkitty():
-    global player_x
-    if keys[pygame.K_LEFT] and player_x > 50:  # передвижение персонажа
-        player_x -= player_speed
-    elif keys[pygame.K_RIGHT] and player_x < 850:
-        player_x += player_speed
-
-
-def kittyjimp():
-    global is_jump, jump_count, player_y
-    if not is_jump:
-        if keys[pygame.K_SPACE]:
-            is_jump = True
-    else:
-        if jump_count >= -7:
-            if jump_count > 0:
-                player_y -= (jump_count ** 2) / 2
-            else:
-                player_y += (jump_count ** 2) / 2
-            jump_count -= 1
-        else:
-            is_jump = False
-            jump_count = 7
-
-
-def animends():
-    global player_anim_count, bg_x, bg_x2
-    if keys[pygame.K_LEFT]:  # смена анимации
-        screen.blit(walk_left[player_anim_count], (player_x, player_y))
-    else:
-        screen.blit(walk_right[player_anim_count], (player_x, player_y))
-    if player_anim_count == 5:  # переключение анимации
-        player_anim_count = 0
-    else:
-        player_anim_count += 1
-    bg_x -= 2
-    bg_x2 -= 2
-
-
 def restartik():
     global gameplay, player_x, bg_x2, bg_x
     if restart_label_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[0]:
@@ -93,25 +47,6 @@ def restartik():
         ghost_in_game.clear()
         bg_x = 0
         bg_x2 = bg_x + 900
-
-
-def iventik():
-    global running, mouse
-    mouse = pygame.mouse.get_pos()
-    pygame.display.update()  # обновление экрана
-    for event in pygame.event.get():  # завершение цикла и выход из приложения
-        if event.type == pygame.QUIT:
-            running = False
-            pygame.quit()
-        if event.type == ghost_timer:
-            ghost_in_game.append(ghost.get_rect(topleft=(900, 500)))
-
-
-ghost = pygame.image.load('images/ukr.png').convert_alpha()
-ghost_in_game = []
-ghost_timer = pygame.USEREVENT + 2
-pygame.time.set_timer(ghost_timer, 1000)
-
 
 def walk():
     global walk_left, walk_right
@@ -129,39 +64,46 @@ def walk():
         pygame.image.load('images/sprite_right/s4.png').convert_alpha(),
         pygame.image.load('images/sprite_right/s5.png').convert_alpha(),
         pygame.image.load('images/sprite_right/s6.png').convert_alpha()]
+def iventik():
+    global running, mouse
+    mouse = pygame.mouse.get_pos()
+    pygame.display.update()  # обновление экрана
+    for event in pygame.event.get():  # завершение цикла и выход из приложения
+        if event.type == pygame.QUIT:
+            running = False
+            pygame.quit()
+        if event.type == ghost_timer:
+            ghost_in_game.append(ghost.get_rect(topleft=(900, 500)))
 
 
-player_anim_count = 0
+ghost = pygame.image.load('images/ukr.png').convert_alpha()
+ghost_in_game = []
+ghost_timer = pygame.USEREVENT + 2
+pygame.time.set_timer(ghost_timer, 1000)
 bg_x = 0
 player_speed = 5
 player_x = 60
 player_y = 500
-is_jump = False
 jump_count = 7
 bg_x2 = 900
 gameplay = True
 running = True
-
-
 while True:
-
     if gameplay:
         treck1()
         walk()
-        draw_background()
+        draw_background(bg, bg_x, bg_x2)
         update_background()
         dead()
-        keys = pygame.key.get_pressed()
-        runkitty()
-        kittyjimp()
-        animends()
+        runkitty(player_speed, player_x)
+        kittyjimp(player_y)
+        animends(screen, walk_right, walk_left, player_x, player_y, bg_x, bg_x2)
     else:
         over()
         treck2()
         screen.blit(restart_label, restart_label_rect)
         restartik()
     iventik()
-
     clock.tick(30)
 
 
