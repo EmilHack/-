@@ -3,16 +3,15 @@ from pygame import mixer
 from musicll import treck1, treck2
 from ekran import over, draw_background, setdisplay
 from движение import kittyjimp, runkitty, animends
+
 pygame.init()
 mixer.init()
 screen = pygame.display.set_mode((900, 600), pygame.RESIZABLE)
 setdisplay()
-label = pygame.font.Font('font/RubikGlitchPop-Regular.ttf', 50)
+bg = pygame.image.load('images/bg.jpg').convert_alpha()
+label = pygame.font.SysFont(None, 50)
 restart_label = label.render('ИГРАТЬ', False, (14, 200, 255))
 restart_label_rect = restart_label.get_rect(topleft=(270, 300))
-bg = pygame.image.load('images/bg.jpg').convert_alpha()
-
-
 def update_background():
     global bg_x, bg_x2
     if bg_x == -900:
@@ -32,6 +31,8 @@ def dead():
                 ghost_in_game.pop(i)
             if player_rect.colliderect(el):
                 gameplay = False
+
+FPS =30
 
 
 def restartik():
@@ -60,7 +61,7 @@ def walk():
         pygame.image.load('images/sprite_right/s5.png').convert_alpha(),
         pygame.image.load('images/sprite_right/s6.png').convert_alpha()]
 def iventik():
-    global running, mouse
+    global running, mouse, score, gameplay
     pygame.display.update()  # обновление экрана
     for event in pygame.event.get():  # завершение цикла и выход из приложения
         if event.type == pygame.QUIT:
@@ -69,7 +70,9 @@ def iventik():
         if event.type == ghost_timer:
             ghost_in_game.append(ghost.get_rect(topleft=(900, 500)))
     clock = pygame.time.Clock()
-    clock.tick(30)
+    clock.tick(FPS)
+
+
 ghost = pygame.image.load('images/ukr.png').convert_alpha()
 ghost_in_game = []
 ghost_timer = pygame.USEREVENT + 2
@@ -86,15 +89,20 @@ while True:
     if gameplay:
         treck1()
         walk()
-        draw_background(bg, bg_x, bg_x2)
+        draw_background(bg, bg_x, bg_x2,label)
         update_background()
         dead()
         player_x, player_speed = runkitty(player_speed, player_x)
         player_y, jump_count = kittyjimp(player_y, jump_count)
         animends(screen, walk_left, walk_right, player_x, player_y, bg_x, bg_x2)
     else:
-        over()
+        over(restart_label, restart_label_rect)
         treck2()
-        screen.blit(restart_label, restart_label_rect)
+
         restartik()
+        score = 0
+        scores = 0
     iventik()
+
+
+

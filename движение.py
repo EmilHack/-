@@ -3,6 +3,7 @@ import pygame
 is_jump = False
 player_anim_count = 0
 
+
 def kittyjimp(player_y, jump_count):
     keys = pygame.key.get_pressed()
     global is_jump
@@ -31,6 +32,7 @@ def runkitty(player_speed, player_x):
         player_x += player_speed
 
     return player_x, player_speed
+
 
 def animends(screen, walk_left, walk_right, player_x, player_y, bg_x, bg_x2):
     keys = pygame.key.get_pressed()

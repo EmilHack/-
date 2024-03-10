@@ -1,5 +1,7 @@
 import pygame
 music_player = False
+
+
 def treck1():
     global music_player
     if not music_player:
@@ -9,6 +11,7 @@ def treck1():
          music_player = True
     if not pygame.mixer.music.get_busy():
          music_player = False
+
 
 def treck2():
     global music_player
