@@ -14,6 +14,7 @@ restart_label_rect = restart_label.get_rect(topleft=(270, 300))
 meter = 0
 jump_ukr = 1
 jump_check = False
+top = 10
 def update_background():
     global bg_x, bg_x2
     if bg_x == -900:
@@ -23,12 +24,12 @@ def update_background():
     bg_x -= 2
     bg_x2 -= 2
 def dead():
-    global gameplay, meter, jump_check, jump_ukr, el_count
+    global gameplay, meter, jump_check, jump_ukr, el_count, top
     player_rect = walk_right[0].get_rect(topleft=(player_x, player_y))
     if ghost_in_game:
         for (i, el) in enumerate(ghost_in_game):
             screen.blit(ghost, el)
-            el.x -= 10
+            el.x -= top
             el_count = el.y
             if meter == 90:
                 jump_check = True
@@ -42,6 +43,7 @@ def dead():
                 else:
                     el.y = el_count
                     jump_ukr = 1
+                    top += 1
                     el.x += 30
                     jump_check = False
                     meter = 0
