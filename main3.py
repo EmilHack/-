@@ -110,6 +110,7 @@ while True:
         player_y, jump_count = kittyjimp(player_y, jump_count)
         animends(screen, walk_left, walk_right, player_x, player_y, bg_x, bg_x2)
     else:
+        top = 10
         over(restart_label, restart_label_rect)
         treck2()
         restartik()

@@ -7,7 +7,7 @@ scores = 0
 
 
 def over(restart_label, restart_label_rect):
-    global bgO_x1, bgO_x2, scores, score
+    global bgO_x1, bgO_x2, scores, score, score_all
     bgO_x1 = 0
     bgO_x2 = 900
     screen.blit(bgover, (bgO_x1, 0))
@@ -15,7 +15,7 @@ def over(restart_label, restart_label_rect):
     screen.blit(restart_label, restart_label_rect)
     scores = 0
     score = 0
-
+    score_all = 1
 score_all = 1
 
 def draw_background(bg, bg_x, bg_x2, label):
