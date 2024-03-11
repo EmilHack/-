@@ -16,17 +16,19 @@ def over(restart_label, restart_label_rect):
     scores = 0
     score = 0
 
+score_all = 1
 
 def draw_background(bg, bg_x, bg_x2, label):
-    global score, scores
+    global score, scores, score_all
     screen.blit(bg, (bg_x, -100))
     screen.blit(bg, (bg_x2, -100))
 
-    if scores > 30:
-        score += 1
+    if scores == 30:
+        score += score_all
         scores = 0
+        score_all += 1
     else:
-        scores +=1
+        scores += 1
     screen.blit(label.render(str(score), False, (0,0,0)), (500, 300))
 
 
