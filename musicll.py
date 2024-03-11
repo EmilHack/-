@@ -1,12 +1,21 @@
 import pygame
+import random
 music_player = False
+tracks = [
+    'sound/mia.mp3',
+    'sound/m0meNteR - Metamorphosed Freddy Fazbear_(Muz-Monster.ru).mp3',
+    'sound/Icyk_Cyper_feat_Igor_cyba_-_Dymok_76563985.mp3',
+    'sound/gedagedago (128kbps).mp3']
 
-
+def random_track():
+    global random_number
+    # Генерация случайного числа от 0 до 3
+    random_number = random.randint(0, 3)
 def treck1():
-    global music_player
+    global music_player, tracks
+    random_track()
     if not music_player:
-         bg_sound = 'sound/gedagedago (128kbps).mp3'
-         pygame.mixer.music.load(bg_sound)
+         pygame.mixer.music.load(tracks[random_number])
          pygame.mixer.music.play()
          music_player = True
     if not pygame.mixer.music.get_busy():
