@@ -5,6 +5,7 @@ bgover = pygame.image.load('images/image.psd(10).png').convert_alpha()
 score = 0
 scores = 0
 
+
 def over(restart_label, restart_label_rect):
     global bgO_x1, bgO_x2, scores, score
     bgO_x1 = 0
@@ -14,7 +15,6 @@ def over(restart_label, restart_label_rect):
     screen.blit(restart_label, restart_label_rect)
     scores = 0
     score = 0
-
 
 
 def draw_background(bg, bg_x, bg_x2, label):
@@ -28,6 +28,7 @@ def draw_background(bg, bg_x, bg_x2, label):
     else:
         scores +=1
     screen.blit(label.render(str(score), False, (0,0,0)), (500, 300))
+
 
 def setdisplay():
     icon = pygame.image.load('images/icon.png').convert_alpha()

@@ -3,15 +3,17 @@ from pygame import mixer
 from musicll import treck1, treck2
 from ekran import over, draw_background, setdisplay
 from движение import kittyjimp, runkitty, animends
-
 pygame.init()
 mixer.init()
 screen = pygame.display.set_mode((900, 600), pygame.RESIZABLE)
 setdisplay()
 bg = pygame.image.load('images/bg.jpg').convert_alpha()
-label = pygame.font.SysFont(None, 50)
+label = pygame.font.SysFont(str(None), 50)
 restart_label = label.render('ИГРАТЬ', False, (14, 200, 255))
 restart_label_rect = restart_label.get_rect(topleft=(270, 300))
+meter = 0
+jump_ukr = 1
+jump_check = False
 def update_background():
     global bg_x, bg_x2
     if bg_x == -900:
@@ -21,20 +23,32 @@ def update_background():
     bg_x -= 2
     bg_x2 -= 2
 def dead():
-    global gameplay
+    global gameplay, meter, jump_check, jump_ukr, el_count
     player_rect = walk_right[0].get_rect(topleft=(player_x, player_y))
     if ghost_in_game:
         for (i, el) in enumerate(ghost_in_game):
             screen.blit(ghost, el)
             el.x -= 10
+            el_count = el.y
+            if meter == 90:
+                jump_check = True
+            else:
+                meter += 1
+            if jump_check:
+                if jump_ukr < 14:
+                    el.y -= 1
+                    el.x -= 10
+                    jump_ukr += 1
+                else:
+                    el.y = el_count
+                    jump_ukr = 1
+                    el.x += 30
+                    jump_check = False
+                    meter = 0
             if el.x < -5:
                 ghost_in_game.pop(i)
             if player_rect.colliderect(el):
                 gameplay = False
-
-FPS =30
-
-
 def restartik():
     global gameplay, player_x, bg_x2, bg_x
     mouse = pygame.mouse.get_pos()
@@ -70,9 +84,7 @@ def iventik():
         if event.type == ghost_timer:
             ghost_in_game.append(ghost.get_rect(topleft=(900, 500)))
     clock = pygame.time.Clock()
-    clock.tick(FPS)
-
-
+    clock.tick(30)
 ghost = pygame.image.load('images/ukr.png').convert_alpha()
 ghost_in_game = []
 ghost_timer = pygame.USEREVENT + 2
@@ -98,11 +110,7 @@ while True:
     else:
         over(restart_label, restart_label_rect)
         treck2()
-
         restartik()
         score = 0
         scores = 0
     iventik()
-
-
-
