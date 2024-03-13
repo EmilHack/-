@@ -11,12 +11,15 @@ bg = pygame.image.load('images/bg.jpg').convert_alpha()
 label = pygame.font.SysFont(str(None), 50)
 restart_label = label.render('Если слабый, закрой игру', False, (14, 200, 255))
 restart_label_rect = restart_label.get_rect(topleft=(270, 300))
+
+
+""" переменные для рандомизации прыжка"""
 meter = 0
 jump_ukr = 1
 jump_check = False
 top = 10
 
-
+""" Обнволение экрана- фоны переключаются 1 за 2 """
 def update_background():
     global bg_x, bg_x2
     if bg_x == -900:
@@ -27,6 +30,7 @@ def update_background():
     bg_x2 -= 2
 
 
+""" добавление хитбокса и рандомизация движения свиней, движение свиней"""
 def dead():
     global gameplay, meter, jump_check, jump_ukr, el_count, top
     player_rect = walk_right[0].get_rect(topleft=(player_x, player_y))
@@ -57,6 +61,7 @@ def dead():
                 gameplay = False
 
 
+""" запуск игры """
 def restartik():
     global gameplay, player_x, bg_x2, bg_x
     mouse = pygame.mouse.get_pos()
@@ -68,6 +73,7 @@ def restartik():
         bg_x2 = bg_x + 900
 
 
+""" спрайты вперед и назад"""
 def walk():
     global walk_left, walk_right
     walk_left = [
@@ -86,6 +92,7 @@ def walk():
         pygame.image.load('images/sprite_right/s6.png').convert_alpha()]
 
 
+''' обновление экрана и проверка кнопки выхода, добавление фпс '''
 def iventik():
     global running, mouse, score, gameplay
     pygame.display.update()  # обновление экрана
@@ -99,7 +106,8 @@ def iventik():
     clock.tick(30)
 
 
-ghost = pygame.image.load('images/ukr.png').convert_alpha()
+
+ghost = pygame.image.load('images/ukr.png').convert_alpha() #враг
 ghost_in_game = []
 ghost_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(ghost_timer, 1000)

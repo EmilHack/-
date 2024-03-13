@@ -7,12 +7,13 @@ tracks = [
     'sound/gedagedago (128kbps).mp3',
     'sound/Tom_Cat_-_Chin_Cheng_hanji_75546186.mp3']
 
-
+""" рандомный трек геймплея"""
 def random_track():
     global random_number
     random_number = random.randint(0, 3)
 
 
+""" вызывание трека в игре"""
 def treck1():
     global music_player, tracks
     random_track()
@@ -22,6 +23,9 @@ def treck1():
          music_player = True
     if not pygame.mixer.music.get_busy():
          music_player = False
+
+
+""" рандомный трек меню"""
 
 
 def random_track_over():
@@ -40,6 +44,7 @@ bg_soundEND = [
 ]
 
 
+""" врубание трека в меню"""
 def treck2():
     global music_player, bg_soundEND
     random_track_over()

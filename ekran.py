@@ -7,6 +7,7 @@ frames = 0
 score_all = 1
 
 
+"""Выввод экрана начала и послсмерти """
 def over(restart_label, restart_label_rect):
     global bgO_x1, bgO_x2, frames, score, score_all
     bgO_x1 = 0
@@ -18,7 +19,7 @@ def over(restart_label, restart_label_rect):
     score = 0
     score_all = 1
 
-
+""" рисование заднего фона в игре и вывод очков """
 def draw_background(bg, bg_x, bg_x2, label):
     global score, frames, score_all
     screen.blit(bg, (bg_x, -100))
@@ -32,7 +33,7 @@ def draw_background(bg, bg_x, bg_x2, label):
         frames += 1
     screen.blit(label.render(str(score), False, (0, 0, 0)), (450, 300))
 
-
+""" настройки небольшие"""
 def setdisplay():
     icon = pygame.image.load('images/icon.png').convert_alpha()
     pygame.display.set_icon(icon)
