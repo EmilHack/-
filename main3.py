@@ -11,7 +11,6 @@ bg = pygame.image.load('images/bg.jpg').convert_alpha()
 label = pygame.font.SysFont(str(None), 50)
 restart_label = label.render('Если слабый, закрой игру', False, (14, 200, 255))
 restart_label_rect = restart_label.get_rect(topleft=(270, 300))
-
 meter = 0
 jump_ukr = 1
 jump_check = False
@@ -90,7 +89,7 @@ def iventik():
     clock.tick(30)
 ghost = pygame.image.load('images/ukr.png').convert_alpha()
 ghost_in_game = []
-ghost_timer = pygame.USEREVENT + 2
+ghost_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(ghost_timer, 1000)
 bg_x = 0
 player_x = 60
@@ -106,6 +105,9 @@ while True:
         walk()
         draw_background(bg, bg_x, bg_x2,label)
         update_background()
+        '''TEST'''
+        if ghost_in_game == 10:
+            ghost_in_game.clear()
         dead()
         player_x, player_speed = runkitty(player_speed, player_x)
         player_y, jump_count = kittyjimp(player_y, jump_count)
