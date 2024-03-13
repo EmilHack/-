@@ -6,6 +6,7 @@ score = 0
 frames = 0
 score_all = 1
 
+
 def over(restart_label, restart_label_rect):
     global bgO_x1, bgO_x2, frames, score, score_all
     bgO_x1 = 0

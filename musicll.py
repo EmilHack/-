@@ -4,14 +4,13 @@ music_player = False
 tracks = [
     'sound/mia.mp3',
     'sound/m0meNteR - Metamorphosed Freddy Fazbear_(Muz-Monster.ru).mp3',
-    'sound/Icyk_Cyper_feat_Igor_cyba_-_Dymok_76563985.mp3',
     'sound/gedagedago (128kbps).mp3',
     'sound/Tom_Cat_-_Chin_Cheng_hanji_75546186.mp3']
 
 
 def random_track():
     global random_number
-    random_number = random.randint(0, 4)
+    random_number = random.randint(0, 3)
 
 
 def treck1():
@@ -39,9 +38,6 @@ bg_soundEND = [
     'sound/over/C418_-_Subwoofer_Lullaby_30921632.mp3',
     'sound/over/KXBRIGU - AFRAID_ Buckshot Roulette Phonk.mp3'
 ]
-
-
-
 
 
 def treck2():

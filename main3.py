@@ -15,6 +15,8 @@ meter = 0
 jump_ukr = 1
 jump_check = False
 top = 10
+
+
 def update_background():
     global bg_x, bg_x2
     if bg_x == -900:
@@ -23,6 +25,8 @@ def update_background():
         bg_x2 = 900
     bg_x -= 2
     bg_x2 -= 2
+
+
 def dead():
     global gameplay, meter, jump_check, jump_ukr, el_count, top
     player_rect = walk_right[0].get_rect(topleft=(player_x, player_y))
@@ -51,6 +55,8 @@ def dead():
                 ghost_in_game.pop(i)
             if player_rect.colliderect(el):
                 gameplay = False
+
+
 def restartik():
     global gameplay, player_x, bg_x2, bg_x
     mouse = pygame.mouse.get_pos()
@@ -60,6 +66,8 @@ def restartik():
         ghost_in_game.clear()
         bg_x = 0
         bg_x2 = bg_x + 900
+
+
 def walk():
     global walk_left, walk_right
     walk_left = [
@@ -76,6 +84,8 @@ def walk():
         pygame.image.load('images/sprite_right/s4.png').convert_alpha(),
         pygame.image.load('images/sprite_right/s5.png').convert_alpha(),
         pygame.image.load('images/sprite_right/s6.png').convert_alpha()]
+
+
 def iventik():
     global running, mouse, score, gameplay
     pygame.display.update()  # обновление экрана
@@ -87,6 +97,8 @@ def iventik():
             ghost_in_game.append(ghost.get_rect(topleft=(900, 500)))
     clock = pygame.time.Clock()
     clock.tick(30)
+
+
 ghost = pygame.image.load('images/ukr.png').convert_alpha()
 ghost_in_game = []
 ghost_timer = pygame.USEREVENT + 1
