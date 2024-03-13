@@ -52,8 +52,6 @@ def animends(screen, walk_left, walk_right, player_x, player_y, bg_x, bg_x2):
 
 
 
-def jump_ukr(ghost):
-    global tochka_ots
 
 
 

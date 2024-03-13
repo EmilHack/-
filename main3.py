@@ -9,8 +9,9 @@ screen = pygame.display.set_mode((900, 600), pygame.RESIZABLE)
 setdisplay()
 bg = pygame.image.load('images/bg.jpg').convert_alpha()
 label = pygame.font.SysFont(str(None), 50)
-restart_label = label.render('ИГРАТЬ', False, (14, 200, 255))
+restart_label = label.render('Если слабый, закрой игру', False, (14, 200, 255))
 restart_label_rect = restart_label.get_rect(topleft=(270, 300))
+
 meter = 0
 jump_ukr = 1
 jump_check = False

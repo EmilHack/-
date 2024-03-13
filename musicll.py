@@ -5,12 +5,13 @@ tracks = [
     'sound/mia.mp3',
     'sound/m0meNteR - Metamorphosed Freddy Fazbear_(Muz-Monster.ru).mp3',
     'sound/Icyk_Cyper_feat_Igor_cyba_-_Dymok_76563985.mp3',
-    'sound/gedagedago (128kbps).mp3']
+    'sound/gedagedago (128kbps).mp3',
+    'sound/Tom_Cat_-_Chin_Cheng_hanji_75546186.mp3']
 
 
 def random_track():
     global random_number
-    random_number = random.randint(0, 3)
+    random_number = random.randint(0, 4)
 
 
 def treck1():
